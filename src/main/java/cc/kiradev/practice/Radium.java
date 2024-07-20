@@ -2,7 +2,9 @@ package cc.kiradev.practice;
 
 import cc.kiradev.practice.commands.MainCommand;
 import cc.kiradev.practice.config.ConfigManager;
+import cc.kiradev.practice.listeners.JoinListener;
 import cc.kiradev.practice.listeners.UserListener;
+import cc.kiradev.practice.managers.LobbyManager;
 import cc.kiradev.practice.managers.MongoManager;
 import cc.kiradev.practice.user.User;
 import cc.kiradev.practice.user.UserManager;
@@ -21,6 +23,7 @@ public class Radium extends JavaPlugin {
     private UserManager userManager;
     private ConfigManager configManager;
     private PaperCommandManager paperCommandManager;
+    private LobbyManager lobbyManager;
 
     @Override
     public void onEnable() {
@@ -44,10 +47,12 @@ public class Radium extends JavaPlugin {
         this.mongoManager = new MongoManager();
         this.userManager = new UserManager();
         this.paperCommandManager = new PaperCommandManager(this);
+        this.lobbyManager = new LobbyManager();
     }
     public void getListeners() {
         Arrays.asList(
-                new UserListener()
+                new UserListener(),
+                new JoinListener()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
     public void getCommands() {

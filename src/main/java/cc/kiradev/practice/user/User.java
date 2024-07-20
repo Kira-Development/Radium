@@ -1,6 +1,7 @@
 package cc.kiradev.practice.user;
 
 import cc.kiradev.practice.Radium;
+import cc.kiradev.practice.enums.UserState;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,11 +15,15 @@ public class User {
     private final UUID uniqueId;
 
     private boolean loaded;
+    private UserState userState = UserState.LOBBY;
 
     public User(UUID uuid) {
         this.uniqueId = uuid;
         this.loaded = false;
 
         getUserManager().loadUser(this);
+    }
+    public boolean isLobby() {
+        return userState.equals(UserState.LOBBY);
     }
 }
