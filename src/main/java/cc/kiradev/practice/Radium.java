@@ -1,9 +1,12 @@
 package cc.kiradev.practice;
 
+import cc.kiradev.practice.commands.MainCommand;
+import cc.kiradev.practice.config.ConfigManager;
 import cc.kiradev.practice.listeners.UserListener;
 import cc.kiradev.practice.managers.MongoManager;
 import cc.kiradev.practice.user.User;
 import cc.kiradev.practice.user.UserManager;
+import co.aikar.commands.PaperCommandManager;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -16,6 +19,8 @@ public class Radium extends JavaPlugin {
     private static Radium instance;
     private MongoManager mongoManager;
     private UserManager userManager;
+    private ConfigManager configManager;
+    private PaperCommandManager paperCommandManager;
 
     @Override
     public void onEnable() {
@@ -23,6 +28,7 @@ public class Radium extends JavaPlugin {
         saveDefaultConfig();
         getManagers();
         getListeners();
+        getCommands();
 
     }
 
@@ -34,12 +40,19 @@ public class Radium extends JavaPlugin {
         this.mongoManager.disconnect();
     }
     public void getManagers() {
+        this.configManager = new ConfigManager();
         this.mongoManager = new MongoManager();
         this.userManager = new UserManager();
+        this.paperCommandManager = new PaperCommandManager(this);
     }
     public void getListeners() {
         Arrays.asList(
                 new UserListener()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
+    }
+    public void getCommands() {
+        Arrays.asList(
+                new MainCommand()
+        ).forEach(command -> paperCommandManager.registerCommand(command));
     }
 }
