@@ -1,3 +1,5 @@
 name: Radium
 version: '${project.version}'
 main: cc.kiradev.practice.Radium
+softdepend:
+  - PlaceholderAPI
