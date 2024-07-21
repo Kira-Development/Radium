@@ -35,6 +35,7 @@ public class UserManager {
             user.setPlayed(document.getInteger("played"));
             user.setKills(document.getInteger("kills"));
             user.setDeaths(document.getInteger("deaths"));
+            user.setCoins(document.getInteger("coins"));
         }
 
         user.setLoaded(true);
@@ -43,7 +44,7 @@ public class UserManager {
     public void saveUser(User user) {
         Document document = new Document();
         document.put("uniqueId", user.getUniqueId().toString());
-
+        document.put("coins", user.getCoins());
         document.put("wins", user.getWins());
         document.put("losses", user.getLosses());
         document.put("currentWinstreak", user.getCurrentWinstreak());

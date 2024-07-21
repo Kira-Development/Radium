@@ -23,6 +23,7 @@ public class User {
     private int played; // Matches played
     private int kills;
     private int deaths;
+    private int coins;
 
     private UserState userState = UserState.LOBBY;
 

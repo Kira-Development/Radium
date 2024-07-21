@@ -21,9 +21,10 @@ public class ConfigManager {
 
     private final FileConfiguration locationsConfig;
     private final FileConfiguration messagesConfig;
+    private final FileConfiguration scoreboardConfig;
 
     private final String[] configFileNames = {
-            "locations.yml", "messages.yml"
+            "locations.yml", "messages.yml", "scoreboard.yml"
     };
 
     public ConfigManager() {
@@ -35,6 +36,7 @@ public class ConfigManager {
 
         locationsConfig = getConfig("locations.yml");
         messagesConfig = getConfig("messages.yml");
+        scoreboardConfig = getConfig("scoreboard.yml");
 
     }
 

@@ -1,0 +1,11 @@
+SCOREBOARD:
+  TITLE: "&c&lRadium &7┃ &fPractice"
+  LINES:
+    LOBBY:
+      - "&7&m----------------------"
+      - "&c&lLobby"
+      - "&fOnline:&c <online>"
+      - ""
+      - "&c&lProfile"
+      - "&f"
+      - "&7&m----------------------"
