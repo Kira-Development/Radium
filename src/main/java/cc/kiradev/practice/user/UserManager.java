@@ -28,7 +28,13 @@ public class UserManager {
     public void loadUser(User user) {
         Document document = this.plugin.getMongoManager().getUsers().find(Filters.eq("uniqueId", user.getUniqueId().toString())).first();
         if (document != null) {
-
+            user.setWins(document.getInteger("wins"));
+            user.setLosses(document.getInteger("losses"));
+            user.setCurrentWinstreak(document.getInteger("currentWinstreak"));
+            user.setHighestWinstreak(document.getInteger("highestWinstreak"));
+            user.setPlayed(document.getInteger("played"));
+            user.setKills(document.getInteger("kills"));
+            user.setDeaths(document.getInteger("deaths"));
         }
 
         user.setLoaded(true);
@@ -37,6 +43,14 @@ public class UserManager {
     public void saveUser(User user) {
         Document document = new Document();
         document.put("uniqueId", user.getUniqueId().toString());
+
+        document.put("wins", user.getWins());
+        document.put("losses", user.getLosses());
+        document.put("currentWinstreak", user.getCurrentWinstreak());
+        document.put("highestWinstreak", user.getHighestWinstreak());
+        document.put("played", user.getPlayed());
+        document.put("kills", user.getKills());
+        document.put("deaths", user.getDeaths());
 
         this.plugin.getMongoManager().getUsers().replaceOne(Filters.eq("uniqueId", user.getUniqueId().toString()), document, new UpdateOptions().upsert(true));
     }
