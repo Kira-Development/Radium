@@ -1,6 +1,8 @@
 package cc.kiradev.practice.utils;
 
+import cc.kiradev.practice.config.ConfigManager;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -45,5 +47,22 @@ public class PlayerUtil {
         }
 
         return true;
+    }
+    public static void teleportToSpawn(Player player) {
+        Location location = player.getLocation();
+        float yaw = ConfigManager.getInstance().getLocationsConfig().getInt("Spawn.Yaw");
+        float pitch = ConfigManager.getInstance().getLocationsConfig().getInt("Spawn.Pitch");
+        double x = ConfigManager.getInstance().getLocationsConfig().getDouble("Spawn.X");
+        double y = ConfigManager.getInstance().getLocationsConfig().getDouble("Spawn.Y");
+        double z = ConfigManager.getInstance().getLocationsConfig().getDouble("Spawn.Z");
+
+        location.setYaw(yaw);
+        location.setPitch(pitch);
+        location.setY(y);
+        location.setX(x);
+        location.setZ(z);
+
+        player.teleport(location);
+
     }
 }
