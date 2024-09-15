@@ -20,7 +20,7 @@ public class User {
     private int losses;
     private int currentWinstreak;
     private int highestWinstreak;
-    private int played; // Matches played
+    private int played;
     private int kills;
     private int deaths;
     private int coins;

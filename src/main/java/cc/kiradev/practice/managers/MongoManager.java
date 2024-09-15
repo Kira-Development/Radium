@@ -66,4 +66,8 @@ public class MongoManager {
             this.plugin.getLogger().info("[Radium] MongoDB has been successfully disconnected.");
         }
     }
+
+    public MongoDatabase getDatabase() {
+        return this.mongoDatabase;
+    }
 }

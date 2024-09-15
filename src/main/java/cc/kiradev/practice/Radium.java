@@ -1,5 +1,8 @@
 package cc.kiradev.practice;
 
+import cc.kiradev.practice.arena.commands.ArenaCommand;
+import cc.kiradev.practice.arena.listeners.ArenaListener;
+import cc.kiradev.practice.arena.managers.ArenaManager;
 import cc.kiradev.practice.commands.MainCommand;
 import cc.kiradev.practice.config.ConfigManager;
 import cc.kiradev.practice.listeners.JoinListener;
@@ -27,6 +30,7 @@ public class Radium extends JavaPlugin {
     private ConfigManager configManager;
     private PaperCommandManager paperCommandManager;
     private LobbyManager lobbyManager;
+    private ArenaManager arenaManager;
 
     @Override
     public void onEnable() {
@@ -36,34 +40,40 @@ public class Radium extends JavaPlugin {
         getListeners();
         getCommands();
         getScoreboard();
-
     }
 
     @Override
     public void onDisable() {
-        for(User user : this.userManager.getAllUsers()) {
+        for (User user : this.userManager.getAllUsers()) {
             this.userManager.saveUser(user);
         }
         this.mongoManager.disconnect();
     }
+
     public void getManagers() {
         this.configManager = new ConfigManager();
         this.mongoManager = new MongoManager();
         this.userManager = new UserManager();
         this.paperCommandManager = new PaperCommandManager(this);
         this.lobbyManager = new LobbyManager();
+        this.arenaManager = new ArenaManager(this.mongoManager.getDatabase()); // Ensure getDatabase() returns MongoDatabase
     }
+
     public void getListeners() {
         Arrays.asList(
                 new UserListener(),
-                new JoinListener()
+                new JoinListener(),
+                new ArenaListener() // Register ArenaListener
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
+
     public void getCommands() {
         Arrays.asList(
-                new MainCommand()
+                new MainCommand(),
+                new ArenaCommand() // Register ArenaCommand
         ).forEach(command -> paperCommandManager.registerCommand(command));
     }
+
     public void getScoreboard() {
         Assemble assemble = new Assemble(this, new BoardProvider());
         assemble.setTicks(20);
